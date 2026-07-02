@@ -195,7 +195,13 @@ procedure HAC is
             verbosity := Character'Pos (opt (opt'First + 1)) - Character'Pos ('0');
           end if;
         when others =>
-          Argument_Error ("Unknown option: """ & arg & '"');
+          if arg = "--help" then
+            Argument_Error ("--help must appear alone");
+          elsif arg = "--version" then
+            Argument_Error ("--version must appear alone");
+          else
+            Argument_Error ("Unknown option: """ & arg & '"');
+          end if;
       end case;
     else
       Compile_and_interpret_file (arg, arg_pos);
