@@ -197,8 +197,8 @@ package body HAC_Pkg is
     PL ("  Sources, site #2: " & HAC_Sys.web3);
     PL ("  Alire Crate: "      & HAC_Sys.web4);
     NL;
-    PL ("Usage: hac [--help|--version]");
-    PL ("       hac [options] main.adb [command-line parameters for main]");
+    PL ("Usage: hac [options] main.adb [command-line parameters for main]");
+    PL ("       hac [--help|--version]");
     NL;
     PL ("Options: -h, h1      : this help");
     PL ("         -h2, --help : show more help & details about options");
