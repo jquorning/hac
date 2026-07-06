@@ -195,7 +195,13 @@ procedure HAC is
             verbosity := Character'Pos (opt (opt'First + 1)) - Character'Pos ('0');
           end if;
         when others =>
-          Argument_Error ("Unknown option: """ & arg & '"');
+          if arg = "--help" then
+            Argument_Error ("--help must appear alone");
+          elsif arg = "--version" then
+            Argument_Error ("--version must appear alone");
+          else
+            Argument_Error ("Unknown option: """ & arg & '"');
+          end if;
       end case;
     else
       Compile_and_interpret_file (arg, arg_pos);
@@ -207,10 +213,19 @@ procedure HAC is
   use Ada.Command_Line;
 
 begin
+  if Argument_Count = 1 and then Argument (1) = "--version" then
+    Print_Version;
+    return;
+  elsif Argument_Count = 1 and then Argument (1) = "--help" then
+    Print_Help;
+    return;
+  end if;
+
   for i in 1 .. Argument_Count loop
     Process_Argument (Argument (i), i);
     exit when quit;
   end loop;
+
   if not hac_ing then
     Help (help_level);
     if verbosity > 1 then
